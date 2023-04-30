@@ -1,7 +1,6 @@
 package gui;
 
 import main.Main;
-import objects.Ship;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,16 +11,13 @@ public class Draw extends JPanel {
     double rotation = 0;
 
     public Draw() {
-        Timer timer = new Timer(10, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        Timer timer = new Timer(10, (e) ->  {
                 if(Main.ship.isRotatesRight()){
                     rotation += 5.0;
                 }
                 if(Main.ship.isRotatesLeft()){
                     rotation -= 5.0;
                 }
-            }
         });
         timer.start();
     }
