@@ -11,10 +11,10 @@ public class Draw extends JPanel {
     public Draw() {
         Timer timer = new Timer(10, (e) ->  {
                 if(Main.ship.isRotatesRight()){
-                    rotation += 5.0;
+                    rotation += 1.0;
                 }
                 if(Main.ship.isRotatesLeft()){
-                    rotation -= 5.0;
+                    rotation -= 1.0;
                 }
         });
         timer.start();
