@@ -2,7 +2,7 @@ package objects;
 
 import main.APoint;
 
-public class Ship extends FlyingThing{
+public class Ship extends FlyingThing{// Ship class extends FlyingThing class
     double rotation = 180;
     boolean rotatesLeft, rotatesRight, isThrust, shooter, shoot;
 

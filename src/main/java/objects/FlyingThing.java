@@ -2,7 +2,7 @@ package objects;
 
 import main.APoint;
 
-public class FlyingThing {
+public class FlyingThing {// Parent class for all flying objects
     double speed;
     APoint position;
     double rotation;

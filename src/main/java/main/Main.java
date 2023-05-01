@@ -6,12 +6,12 @@ import objects.Ship;
 import java.util.*;
 
 public class Main {
-    public static Ship ship = new Ship(new APoint((double) AFrame.frameDimension.width / 2, (double) AFrame.frameDimension.height / 2));
+    public static Ship ship = new Ship(new APoint((double) AFrame.frameDimension.width / 2, (double) AFrame.frameDimension.height / 2));// new Ship(new APoint(100,100));
 
-    public static ArrayList<Bullet> bullets = new ArrayList<>();
-    public static ArrayList<Asteroid> asteroids = new ArrayList<>();
+    public static ArrayList<Bullet> bullets = new ArrayList<>();// ArrayList of bullets that are currently on the screen
+    public static ArrayList<Asteroid> asteroids = new ArrayList<>();// ArrayList of asteroids that are currently on the screen
 
-    public static Asteroid recentlyDestroyed;
+    public static Asteroid recentlyDestroyed;// the asteroid that was most recently destroyed to hand over more information than in a boolean return statement
     public static int lives = 5;
     public static int points = 0;
     public static int level = 0;
@@ -22,10 +22,10 @@ public class Main {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
 
-        System.out.println("Hello an welcome to Asteroids");
+        System.out.println("Hello an welcome to Asteroids");// welcome message and settings
         System.out.print("please indicate your level you would like to start (0 for default): ");
         boolean rightInput = false;
-        while(!rightInput){
+        while(!rightInput){// loop to make sure the user inputs a number
             String input = scan.next();
             try {
                 level = Integer.parseInt(input);
@@ -39,7 +39,7 @@ public class Main {
         new AFrame();
     }
 
-    public static void startALevel(){
+    public static void startALevel(){// method to start a new level with a certain amount of asteroids
         Random r = new Random();
             for(int i = 0; i < level + 2; i++){
                 double x;

@@ -6,9 +6,9 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Asteroid extends FlyingThing{
-    int model, hitCount;
-    ArrayList<Polygon> polygons = new ArrayList<>();
-    ArrayList<BoxedCollider> colliders = new ArrayList<>();
+    int model, hitCount;// model: 0 - small, 1 - big
+    ArrayList<Polygon> polygons = new ArrayList<>();// all models of asteroids
+    ArrayList<BoxedCollider> colliders = new ArrayList<>();// colliders according to models to detect collisions
 
     public Asteroid(APoint position, double rotation, double speed, int model) {
         this.position = position;
@@ -17,6 +17,7 @@ public class Asteroid extends FlyingThing{
         this.model = model;
         this.hitCount = model + 2;
 
+        // add all models of asteroids
         polygons.add(new Polygon());
         polygons.get(0).addPoint(-15,10);
         polygons.get(0).addPoint(-10,-15);
@@ -36,6 +37,7 @@ public class Asteroid extends FlyingThing{
         polygons.get(1).addPoint(40,0);
         polygons.get(1).addPoint(10,-40);
 
+        // add all colliders according to models
         colliders.add(new BoxedCollider(-15,-20,20,15));
         colliders.add(new BoxedCollider(-60,-40,40,60));
     }
