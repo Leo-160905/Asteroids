@@ -12,16 +12,21 @@ public class AFrame extends JFrame {
         Dimension screenDimension = getToolkit().getScreenSize();
         setLocation((screenDimension.width - frameDimension.width) / 2, (screenDimension.height - frameDimension.height) / 2);
         setSize(frameDimension);
-        setBackground(Color.BLACK);
         addKeyListener(new KeyHandler());
 
-        ShipDraw background = new ShipDraw();
-        background.setLocation(0, 0);
-        background.setSize(frameDimension);
-        background.setBackground(Color.black);
+        Draw mainScreen = new Draw();
+        mainScreen.setLocation(0, 0);
+        mainScreen.setSize(frameDimension);
+        mainScreen.setBackground(Color.black);
+
+//        BulletDraw bulletPanel = new BulletDraw();
+//        bulletPanel.setLocation(0, 0);
+//        bulletPanel.setSize(frameDimension);
+//        bulletPanel.setBackground(null);
 
         Container cp = getContentPane();
-        cp.add(background);
+        cp.add(mainScreen);
+//        cp.add(bulletPanel);
         setVisible(true);
     }
 }

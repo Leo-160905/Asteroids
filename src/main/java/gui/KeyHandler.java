@@ -1,7 +1,6 @@
 package gui;
 
 import main.Main;
-
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -15,8 +14,14 @@ public class KeyHandler extends KeyAdapter {
         if(e.getKeyCode() == KeyEvent.VK_D){
             Main.ship.setRotatesRight(true);
         }
-        if(e.getKeyCode() == KeyEvent.VK_SPACE){
+        if(e.getKeyCode() == KeyEvent.VK_W){
             Main.ship.setThrust(true);
+        }
+        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+            if(!Main.ship.isShooter()){
+                Main.ship.setShoot(true);
+            }
+            Main.ship.setShooter(true);
         }
     }
 
@@ -29,8 +34,12 @@ public class KeyHandler extends KeyAdapter {
         if(e.getKeyCode() == KeyEvent.VK_D){
             Main.ship.setRotatesRight(false);
         }
-        if(e.getKeyCode() == KeyEvent.VK_SPACE){
+        if(e.getKeyCode() == KeyEvent.VK_W){
             Main.ship.setThrust(false);
+        }
+        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+            Main.ship.setShooter(false);
+            Main.ship.setShoot(false);
         }
     }
 }

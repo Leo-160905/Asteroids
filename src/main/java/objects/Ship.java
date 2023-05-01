@@ -2,33 +2,29 @@ package objects;
 
 import main.APoint;
 
-public class Ship {
-    APoint position;
+public class Ship extends FlyingThing{
     double rotation = 180;
-    boolean rotatesLeft, rotatesRight, isThrust;
-    int thrust;
+    boolean rotatesLeft, rotatesRight, isThrust, shooter, shoot;
 
-    public Ship(APoint position, int thrust) {
+    public boolean isShoot() {
+        return shoot;
+    }
+
+    public void setShoot(boolean shoot) {
+        this.shoot = shoot;
+    }
+
+    public boolean isShooter() {
+        return shooter;
+    }
+
+    public void setShooter(boolean shooter) {
+        this.shooter = shooter;
+    }
+
+    public Ship(APoint position) {
         this.position = position;
-        this.thrust = thrust;
     }
-
-    public APoint getPosition() {
-        return position;
-    }
-
-    public void setPosition(APoint position) {
-        this.position = position;
-    }
-
-    public void setX(int posX){
-        this.position = new APoint(posX, this.position.y);
-    }
-
-    public void setY(int posY){
-        this.position = new APoint(this.position.x, posY);
-    }
-
 
     public boolean isRotatesLeft() {
         return rotatesLeft;
