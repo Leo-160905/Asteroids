@@ -15,7 +15,7 @@ public class AFrame extends JFrame {
         setBackground(Color.BLACK);
         addKeyListener(new KeyHandler());
 
-        Draw background = new Draw();
+        ShipDraw background = new ShipDraw();
         background.setLocation(0, 0);
         background.setSize(frameDimension);
         background.setBackground(Color.black);

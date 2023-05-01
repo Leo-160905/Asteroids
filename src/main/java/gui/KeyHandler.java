@@ -15,6 +15,9 @@ public class KeyHandler extends KeyAdapter {
         if(e.getKeyCode() == KeyEvent.VK_D){
             Main.ship.setRotatesRight(true);
         }
+        if(e.getKeyCode() == KeyEvent.VK_SPACE){
+            Main.ship.setThrust(true);
+        }
     }
 
     @Override
@@ -25,6 +28,9 @@ public class KeyHandler extends KeyAdapter {
         }
         if(e.getKeyCode() == KeyEvent.VK_D){
             Main.ship.setRotatesRight(false);
+        }
+        if(e.getKeyCode() == KeyEvent.VK_SPACE){
+            Main.ship.setThrust(false);
         }
     }
 }
