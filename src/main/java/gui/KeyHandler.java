@@ -2,8 +2,10 @@ package gui;
 
 import main.Main;
 
+import javax.sound.sampled.LineUnavailableException;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 
 public class KeyHandler extends KeyAdapter {
     @Override
@@ -18,6 +20,12 @@ public class KeyHandler extends KeyAdapter {
         if(e.getKeyCode() == KeyEvent.VK_W){
             Main.ship.setThrust(true);
         }
+        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+            if(!Main.ship.isShooter()){
+                Main.ship.setShoot(true);
+            }
+            Main.ship.setShooter(true);
+        }
     }
 
     @Override
@@ -31,6 +39,10 @@ public class KeyHandler extends KeyAdapter {
         }
         if(e.getKeyCode() == KeyEvent.VK_W){
             Main.ship.setThrust(false);
+        }
+        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+            Main.ship.setShooter(false);
+            Main.ship.setShoot(false);
         }
     }
 }
