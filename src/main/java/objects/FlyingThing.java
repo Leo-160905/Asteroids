@@ -10,11 +10,6 @@ public class FlyingThing {
     public double getSpeed() {
         return speed;
     }
-
-    public void setSpeed(double speed) {
-        this.speed = speed;
-    }
-
     public APoint getPosition() {
         return position;
     }

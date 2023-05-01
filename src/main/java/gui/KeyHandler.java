@@ -1,11 +1,8 @@
 package gui;
 
 import main.Main;
-
-import javax.sound.sampled.LineUnavailableException;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.io.IOException;
 
 public class KeyHandler extends KeyAdapter {
     @Override

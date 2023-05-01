@@ -1,18 +1,10 @@
 package main;
-
-import com.sun.org.apache.bcel.internal.classfile.JavaClass;
 import gui.AFrame;
 import objects.Asteroid;
 import objects.Bullet;
 import objects.Ship;
-import sun.audio.AudioStream;
-
-import javax.naming.spi.DirectoryManager;
 import javax.sound.sampled.*;
-import java.awt.*;
 import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.*;
 
 public class Main {
@@ -26,8 +18,8 @@ public class Main {
     public static int points = 0;
     public static int level = 0;
 
-    public static ArrayList<File> files = new ArrayList<>();
-    public static ArrayList<AudioInputStream> audioInputStreams = new ArrayList<>();
+//    public static ArrayList<File> files = new ArrayList<>();
+//    public static ArrayList<AudioInputStream> audioInputStreams = new ArrayList<>();
 
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
@@ -52,8 +44,8 @@ public class Main {
     public static void startALevel(){
         Random r = new Random();
             for(int i = 0; i < level + 2; i++){
-                double x = 0;
-                double y = 0;
+                double x;
+                double y;
                 int fw = AFrame.frameDimension.width;
                 int fh = AFrame.frameDimension.width;
                 do{

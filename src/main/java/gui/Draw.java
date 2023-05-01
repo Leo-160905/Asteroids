@@ -4,12 +4,8 @@ import main.APoint;
 import main.Collider;
 import main.Main;
 import objects.*;
-import sun.font.FontFamily;
-
-import javax.sound.sampled.LineUnavailableException;
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;

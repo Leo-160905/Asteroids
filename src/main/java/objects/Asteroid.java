@@ -6,7 +6,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Asteroid extends FlyingThing{
-    int model, hitCount = 0;
+    int model, hitCount;
     ArrayList<Polygon> polygons = new ArrayList<>();
     ArrayList<BoxedCollider> colliders = new ArrayList<>();
 
