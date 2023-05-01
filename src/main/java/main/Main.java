@@ -20,21 +20,6 @@ public class Main {
 //    public static ArrayList<AudioInputStream> audioInputStreams = new ArrayList<>();
 
     public static void main(String[] args) {
-        Scanner scan = new Scanner(System.in);
-
-        System.out.println("Hello an welcome to Asteroids");// welcome message and settings
-        System.out.print("please indicate your level you would like to start (0 for default): ");
-        boolean rightInput = false;
-        while(!rightInput){// loop to make sure the user inputs a number
-            String input = scan.next();
-            try {
-                level = Integer.parseInt(input);
-                rightInput = true;
-            }
-            catch (Exception e) {
-                System.out.print("False input please try again: ");
-            }
-        }
         startALevel();
         new AFrame();
     }
