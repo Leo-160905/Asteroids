@@ -3,8 +3,6 @@ import gui.AFrame;
 import objects.Asteroid;
 import objects.Bullet;
 import objects.Ship;
-import javax.sound.sampled.*;
-import java.io.File;
 import java.util.*;
 
 public class Main {
