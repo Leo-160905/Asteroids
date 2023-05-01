@@ -36,7 +36,7 @@ public class ShipDraw extends JPanel {
                     if(newObject) {
                         forces.add(new AForce(Main.ship.getRotation(), 2));
                     }
-                    resist = 20.0;
+                    resist = 10.0;
                 }
                 if(!Main.ship.isThrust() && counter % 50 == 0){
 
