@@ -19,8 +19,4 @@ public class AForce {
     public double getLength() {
         return length;
     }
-
-    public void decrease(){
-        this.length -= 1;
-    }
 }

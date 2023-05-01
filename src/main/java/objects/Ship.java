@@ -2,8 +2,6 @@ package objects;
 
 import main.APoint;
 
-import java.awt.*;
-
 public class Ship {
     APoint position;
     double rotation = 180;
@@ -31,13 +29,6 @@ public class Ship {
         this.position = new APoint(this.position.x, posY);
     }
 
-    public int getThrust() {
-        return thrust;
-    }
-
-    public void setThrust(int thrust) {
-        this.thrust = thrust;
-    }
 
     public boolean isRotatesLeft() {
         return rotatesLeft;
