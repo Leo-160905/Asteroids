@@ -30,12 +30,11 @@ public class Main {
                 double x;
                 double y;
                 int fw = AFrame.frameDimension.width;
-                int fh = AFrame.frameDimension.width;
+                int fh = AFrame.frameDimension.height;
                 do{
                     x = r.nextInt(fw);
                     y = r.nextInt(fh);
                 }while(x < fw / 2.0 - 50 && x > fw / 2.0 + 50 && y < fh / 2.0 - 50 && y > fh / 2.0 + 50);
-
             Main.asteroids.add(new Asteroid(new APoint(x,y),r.nextInt(360),r.nextInt(15) + 5,1));
         }
     }

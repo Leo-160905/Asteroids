@@ -76,8 +76,8 @@ public class Draw extends JPanel {
                 }
                 else {
                     if(Main.asteroids.size() == 0){// If all asteroids are destroyed, start new level
-                        Main.startALevel();
                         Main.level += 1;
+                        Main.startALevel();
                         if(Main.level % 3 == 0 && Main.lives < 5){
                             Main.lives += 1;
                         }
