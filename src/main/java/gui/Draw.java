@@ -104,10 +104,6 @@ public class Draw extends JPanel {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
 
-
-        int fw = AFrame.frameDimension.width;
-        int fh = AFrame.frameDimension.height;
-
         // Draw Info on top left corner
         g2d.setColor(Color.white);
         g2d.translate(20 * 5,50);
