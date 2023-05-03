@@ -38,8 +38,7 @@ public class Main {
                     x = r.nextInt(sX);
                     y = r.nextInt(sY);
                 }while(x < sX / 2.0 - 100 && x > sX / 2.0 + 100 && y < sY / 2.0 - 100 && y > sY / 2.0 + 100);
-//            Main.asteroids.add(new Asteroid(new APoint(x,y),r.nextInt(360),r.nextInt(15) + 5,1));
-            Main.asteroids.add(new Asteroid(new APoint(x,y),r.nextInt(360),0,1));
+            Main.asteroids.add(new Asteroid(new APoint(x,y),r.nextInt(360),r.nextInt(15) + 5,1));
         }
     }
 

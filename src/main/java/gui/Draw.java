@@ -47,7 +47,7 @@ public class Draw extends JPanel {
                     resist--;// Make resist smaller for stronger resistance
                 }
             }
-            if((Main.ship.isShooter() && counter % 100 == 0 || Main.ship.isShoot()) && Main.bullets.size() < 15){// Shoot bullet if key is pressed and there are less than 15 bullets
+            if(((Main.ship.isShooter() && counter % 100 == 0 || Main.ship.isShoot()) && Main.bullets.size() < 15) && Main.coolDown <= 0){// Shoot bullet if key is pressed and there are less than 15 bullets
                 // Makes pattern, that you can shout more bullets after each other but if you hold it will just shoot one every 100 ticks
                 Main.ship.setShoot(false);
                 Main.bullets.add(new Bullet(25.0, Main.ship.getRotation(),Main.ship.getPosition()));
@@ -75,7 +75,7 @@ public class Draw extends JPanel {
                     Main.coolDown = 20;
                     Main.ship.setPosition(new APoint((double) AFrame.frameDimension.width / 2, (double) AFrame.frameDimension.height / 2));
                     forces.clear();
-                    if(Main.lives < 0){
+                    if(Main.lives <= 0){
                         System.exit(0);
                     }
                 }
@@ -106,7 +106,6 @@ public class Draw extends JPanel {
 
             if (Main.coolDown > 0 && counter % 25 == 0) {
                 Main.coolDown--;
-                System.out.println(Main.coolDown);
             }
 
             counter++;
