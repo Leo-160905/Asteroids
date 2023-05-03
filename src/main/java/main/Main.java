@@ -16,6 +16,8 @@ public class Main {
     public static int points = 0;
     public static int level = 0;
 
+    public static int coolDown = 20;// 3 seconds for cool down after starting a new level or crashing
+
 //    public static ArrayList<File> files = new ArrayList<>();
 //    public static ArrayList<AudioInputStream> audioInputStreams = new ArrayList<>();
 
@@ -25,17 +27,19 @@ public class Main {
     }
 
     public static void startALevel(){// method to start a new level with a certain amount of asteroids
+        coolDown = 20;
         Random r = new Random();
             for(int i = 0; i < level + 2; i++){
                 double x;
                 double y;
-                int fw = AFrame.frameDimension.width;
-                int fh = AFrame.frameDimension.height;
+                int sX = Math.toIntExact(Math.round(ship.getPosition().x));
+                int sY = Math.toIntExact(Math.round(ship.getPosition().y));
                 do{
-                    x = r.nextInt(fw);
-                    y = r.nextInt(fh);
-                }while(x < fw / 2.0 - 100 && x > fw / 2.0 + 100 && y < fh / 2.0 - 100 && y > fh / 2.0 + 100);
-            Main.asteroids.add(new Asteroid(new APoint(x,y),r.nextInt(360),r.nextInt(15) + 5,1));
+                    x = r.nextInt(sX);
+                    y = r.nextInt(sY);
+                }while(x < sX / 2.0 - 100 && x > sX / 2.0 + 100 && y < sY / 2.0 - 100 && y > sY / 2.0 + 100);
+//            Main.asteroids.add(new Asteroid(new APoint(x,y),r.nextInt(360),r.nextInt(15) + 5,1));
+            Main.asteroids.add(new Asteroid(new APoint(x,y),r.nextInt(360),0,1));
         }
     }
 

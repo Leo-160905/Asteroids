@@ -13,6 +13,7 @@ import java.util.Random;
 public class Draw extends JPanel {
     int counter = 0;
     double resist = 0.0;
+    Color shipColor = Color.white;
     ArrayList<AForce> forces = new ArrayList<>();
 
     public Draw() {
@@ -67,8 +68,17 @@ public class Draw extends JPanel {
             moveBullets();
             moveAsteroids();
 
-            if(counter % 4 == 0){// Move forces every 4th tick
+            if((counter % 4 == 0) && Main.coolDown <= 0){// Move forces every 4th tick
                 Collider collider = new Collider();
+                if(collider.shipAsteroid()){// Check if ship collides with an asteroid and if yes, reset ship position and remove one life
+                    Main.lives -= 1;
+                    Main.coolDown = 20;
+                    Main.ship.setPosition(new APoint((double) AFrame.frameDimension.width / 2, (double) AFrame.frameDimension.height / 2));
+                    forces.clear();
+                    if(Main.lives < 0){
+                        System.exit(0);
+                    }
+                }
                 if(collider.bulletAsteroids()){// Check if bullet collides with asteroid and if it's a big one create 2 small ones
                     Random r = new Random();
                     Main.asteroids.add(new Asteroid(Main.recentlyDestroyed.getPosition(), r.nextInt(10) + Main.ship.getRotation() - 5,r.nextInt(10) + 5,0));
@@ -83,16 +93,22 @@ public class Draw extends JPanel {
                         }
                     }
                 }
-                if(collider.shipAsteroid()){// Check if ship collides with an asteroid and if yes, reset ship position and remove one life
-                    Main.lives -= 1;
-                    Main.ship.setPosition(new APoint((double) AFrame.frameDimension.width / 2, (double) AFrame.frameDimension.height / 2));
-                    forces.clear();
-                    if(Main.lives <= 0){
-                        System.out.println("failed");
-                        System.exit(0);
-                    }
-                }
             }
+            if (Main.coolDown % 2 == 0 && Main.coolDown > 0) {
+                shipColor = Color.white;
+            }
+            else if (Main.coolDown % 2 == 1) {
+                shipColor = Color.decode("#39EEFF");
+            }
+            else if(shipColor != Color.white){
+                shipColor = Color.white;
+            }
+
+            if (Main.coolDown > 0 && counter % 25 == 0) {
+                Main.coolDown--;
+                System.out.println(Main.coolDown);
+            }
+
             counter++;
             counter = counter % 1000;
         });
@@ -147,7 +163,7 @@ public class Draw extends JPanel {
         }
 
         // Draw spaceship
-        g2d.setColor(Color.white);
+        g2d.setColor(shipColor);
         g2d.translate(Main.ship.getPosition().x,Main.ship.getPosition().y);
         g2d.rotate(Math.toRadians(Main.ship.getRotation()));
         g2d.drawLine(-7, -10, 7, -10);
