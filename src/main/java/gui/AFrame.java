@@ -11,16 +11,18 @@ public class AFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Dimension screenDimension = getToolkit().getScreenSize();
         setLocation((screenDimension.width - frameDimension.width) / 2, (screenDimension.height - frameDimension.height) / 2);
-        setSize(frameDimension);
+        setLayout(new BorderLayout());
+        setTitle("Asteroids");
         addKeyListener(new KeyHandler());
 
         Draw mainScreen = new Draw();
         mainScreen.setLocation(0, 0);
-        mainScreen.setSize(frameDimension);
+        mainScreen.setPreferredSize(frameDimension);
         mainScreen.setBackground(Color.black);
 
         Container cp = getContentPane();
         cp.add(mainScreen);
+        pack();
         setVisible(true);
     }
 }

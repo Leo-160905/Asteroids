@@ -1,5 +1,4 @@
 package gui;
-
 import main.APoint;
 import main.Main;
 import java.awt.event.KeyAdapter;
@@ -46,6 +45,9 @@ public class KeyHandler extends KeyAdapter {
         if(e.getKeyCode() == KeyEvent.VK_S) {
             Random r = new Random();
             Main.ship.setPosition(new APoint(r.nextInt(AFrame.frameDimension.width), r.nextInt(AFrame.frameDimension.height)));
+        }
+        if (e.getKeyCode() == KeyEvent.VK_I) {
+            System.out.println("Ship: " + Main.ship.getRotation() + "°, " + Main.ship.getSpeed());
         }
     }
 }

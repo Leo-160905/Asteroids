@@ -2,6 +2,8 @@ package main;
 
 import objects.Asteroid;
 import objects.Bullet;
+import objects.TwoCondition;
+
 public class Collider {
 
     public boolean bulletAsteroids(){
@@ -24,6 +26,7 @@ public class Collider {
                         if (Main.asteroids.get(i).getHitCount() <= 0) {// Asteroid is dead
                             if (Main.asteroids.get(i).getModel() > 0) {// is it a big or a small one
                                 Main.recentlyDestroyed = Main.asteroids.get(i);
+                                Main.lastBullet = Main.bullets.get(j);
                                 returnable = true;
                                 Main.points += 30;
                             }
@@ -44,9 +47,13 @@ public class Collider {
         return returnable;
     }
 
-    public boolean shipAsteroid() {
+    public TwoCondition shipAsteroid() {
+        int removable = -1;
+        boolean hitted = false;
+        boolean isBigAsteroid = false;
         if (Main.asteroids.size() > 0) {
-            for (Asteroid a : Main.asteroids) {
+            for (int i = Main.asteroids.size() - 1; i >= 0; i--) {
+                Asteroid a = Main.asteroids.get(i);
                 double x1 = a.getCollider().getPoint1().x + a.getPosition().x;
                 double y1 = a.getCollider().getPoint1().y + a.getPosition().y;
                 double x2 = a.getCollider().getPoint2().x + a.getPosition().x;
@@ -55,10 +62,30 @@ public class Collider {
                 double shipX = Main.ship.getPosition().x;
                 double shipY = Main.ship.getPosition().y;
                 if (x1 - 3 < shipX && x2 + 3 > shipX && y1 - 3 < shipY && y2 + 3 > shipY) {
-                    return true;
+                    a.setHitCount();
+                    if (a.getHitCount() <= 0) {// Asteroid is dead
+                        if (a.getModel() > 0) {// is it a big or a small one
+                            Main.recentlyDestroyed = Main.asteroids.get(i);
+                            Main.lastBullet = new Bullet(Main.ship.getSpeed(), Main.ship.getRotation(), new APoint(0,0));
+                            isBigAsteroid = true;
+                            Main.points += 30;
+                        }
+                        else {
+                            Main.points += 70;
+                        }
+                        removable = i;
+                    }
+                    hitted = true;
+                }
+                if(removable != -1){
+                    Main.asteroids.remove(removable);
+                    removable = -1;
+                }
+                if (hitted) {
+                    return new TwoCondition(true, isBigAsteroid);
                 }
             }
         }
-        return false;
+        return new TwoCondition(false, false);
     }
 }
