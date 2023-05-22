@@ -3,6 +3,8 @@ import gui.AFrame;
 import objects.Asteroid;
 import objects.Bullet;
 import objects.Ship;
+
+import javax.swing.Timer;
 import java.util.*;
 
 public class Main {
@@ -16,6 +18,7 @@ public class Main {
     public static int lives = 5;
     public static int points = 0;
     public static int level = 0;
+    public static Timer gameTimer;
 
     public static int coolDown = 10;// 10 ticks for cool down after starting a new level or crashing
 

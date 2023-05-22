@@ -7,6 +7,8 @@ import objects.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
@@ -15,10 +17,19 @@ public class Draw extends JPanel {
     int counter = 0;
     double resist = 0.0;
     Color shipColor = Color.white;
+    Font atariFont;
     ArrayList<AForce> forces = new ArrayList<>();
 
     public Draw() {
-        Timer timer = new Timer(5, (e) -> {// Timer with 5ms delay
+        InputStream is = getClass().getResourceAsStream("/Fonts/AtariFont.ttf");
+        try {
+            assert is != null;
+            atariFont = Font.createFont(Font.TRUETYPE_FONT, is);
+        } catch (FontFormatException | IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        Main.gameTimer = new Timer(5, (e) -> {// Timer with 5ms delay
             if (Main.ship.isRotatesRight()) {// Rotate ship right if key is pressed
                 double r = Main.ship.getRotation() + 1.0;
                 Main.ship.setRotation(r % 360);
@@ -111,7 +122,7 @@ public class Draw extends JPanel {
             counter++;
             counter = counter % 1000;
         });
-        timer.start();
+
     }
 
     @Override
@@ -122,11 +133,21 @@ public class Draw extends JPanel {
         // Draw Info on top left corner
         g2d.setColor(Color.white);
         g2d.translate(20 * 5, 50);
-//        g2d.setFont(new Font("Pixer",Font.PLAIN,50));
-        g2d.setFont(new Font("Arial", Font.PLAIN, 15));
+        g2d.setFont(atariFont.deriveFont(Font.PLAIN, 13));
+//        g2d.setFont(g2d.getFont().deriveFont(Font.PLAIN, 13));
         g2d.drawString("Points: " + Main.points, 0, 0);
-        g2d.drawString("Level: " + Main.level, 7, 15);
+        g2d.drawString(" Level: " + Main.level, 0, 15);
         g2d.translate(-20 * 5, -50);
+
+        // Draw Start Dialog
+        if(!Main.gameTimer.isRunning()) {
+            g2d.setColor(Color.white);
+            g2d.translate(AFrame.frameDimension.width / 2 - 269, AFrame.frameDimension.height / 2 + 100);
+            g2d.setFont(g2d.getFont().deriveFont(Font.PLAIN, 35));
+            g2d.drawString("Press Enter To Start",0,0);
+            g2d.setFont(g2d.getFont().deriveFont(Font.PLAIN, 15));
+            g2d.translate(-AFrame.frameDimension.width / 2 + 269, -AFrame.frameDimension.height / 2 - 100);
+        }
 
         // Draw Lives on left corner
         g2d.setColor(Color.gray);
@@ -147,7 +168,7 @@ public class Draw extends JPanel {
             for (Asteroid a : Main.asteroids) {
                 g2d.translate(a.getPosition().x + 2, a.getPosition().y);
                 g2d.drawPolygon(a.getPolygon());
-                g2d.drawString(String.valueOf(a.getHitCount()), 0, 0);
+//                g2d.drawString(String.valueOf(a.getHitCount()), 0, 0);
                 g2d.translate(-(a.getPosition().x + 2), -(a.getPosition().y));
             }
         }
