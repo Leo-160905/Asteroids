@@ -17,14 +17,14 @@ public class Draw extends JPanel {
     int counter = 0;
     double resist = 0.0;
     Color shipColor = Color.white;
-    Font atariFont;
+
     ArrayList<AForce> forces = new ArrayList<>();
 
     public Draw() {
         InputStream is = getClass().getResourceAsStream("/Fonts/AtariFont.ttf");
         try {
             assert is != null;
-            atariFont = Font.createFont(Font.TRUETYPE_FONT, is);
+            Main.atariFont = Font.createFont(Font.TRUETYPE_FONT, is);
         } catch (FontFormatException | IOException e) {
             throw new RuntimeException(e);
         }
@@ -63,7 +63,7 @@ public class Draw extends JPanel {
                 // Makes pattern, that you can shout more bullets after each other but if you hold it will just shoot one every 100 ticks
                 Main.ship.setShoot(false);
                 Main.bullets.add(new Bullet(25.0, Main.ship.getRotation(), Main.ship.getPosition()));
-
+                Main.points--;
                 boolean newObject = true;
                 for (AForce f : forces) {// Check if force with same rotation already exists
                     if (f.getRotation() == 180 + Main.ship.getRotation()) {// If yes, increase length of force when shooting as recoil
@@ -85,11 +85,12 @@ public class Draw extends JPanel {
                 TwoCondition shipCollides = collider.shipAsteroid();
                 if (shipCollides.condition1) {// Check if ship collides with an asteroid and if yes, reset ship position and remove one life
                     Main.lives -= 1;
+                    Main.points -= 300;
                     Main.coolDown = 10;
                     Main.ship.setPosition(new APoint((double) AFrame.frameDimension.width / 2, (double) AFrame.frameDimension.height / 2));
                     forces.clear();
                     if (Main.lives <= 0) {
-                        System.exit(0);
+                        AFrame.changeScene();
                     }
                 }
                 if (shipCollides.condition2) {
@@ -119,6 +120,11 @@ public class Draw extends JPanel {
                 Main.coolDown--;
             }
 
+            repaint();
+            if (Objects.equals(System.getProperty("os.name"), "Linux")) {// Fixing lags on Linux systems
+                Toolkit.getDefaultToolkit().sync();
+            }
+
             counter++;
             counter = counter % 1000;
         });
@@ -133,7 +139,7 @@ public class Draw extends JPanel {
         // Draw Info on top left corner
         g2d.setColor(Color.white);
         g2d.translate(20 * 5, 50);
-        g2d.setFont(atariFont.deriveFont(Font.PLAIN, 13));
+        g2d.setFont(Main.atariFont.deriveFont(Font.PLAIN, 13));
 //        g2d.setFont(g2d.getFont().deriveFont(Font.PLAIN, 13));
         g2d.drawString("Points: " + Main.points, 0, 0);
         g2d.drawString(" Level: " + Main.level, 0, 15);
@@ -199,11 +205,6 @@ public class Draw extends JPanel {
             g2d.drawLine(0, -14, 2, -10);
             g2d.drawLine(2, -10, 4, -14);
             g2d.drawLine(4, -14, 6, -10);
-        }
-
-        repaint();
-        if (Objects.equals(System.getProperty("os.name"), "Linux")) {// Fixing lags on Linux systems
-            Toolkit.getDefaultToolkit().sync();
         }
     }
 

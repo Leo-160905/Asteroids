@@ -47,7 +47,12 @@ public class KeyHandler extends KeyAdapter {
             Main.ship.setPosition(new APoint(r.nextInt(AFrame.frameDimension.width), r.nextInt(AFrame.frameDimension.height)));
         }
         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-            Main.gameTimer.start();
+            if (!Main.gameTimer.isRunning()) {
+                Main.gameTimer.start();
+            }
+            else {
+                Main.gameTimer.stop();
+            }
         }
     }
 }
