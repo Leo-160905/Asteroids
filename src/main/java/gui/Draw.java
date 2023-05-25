@@ -9,6 +9,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
@@ -17,10 +19,18 @@ public class Draw extends JPanel {
     int counter = 0;
     double resist = 0.0;
     Color shipColor = Color.white;
+    int lastTimeCPU, actualFpsCPU = 0;
+    int lastTimeGPU, actualFpsGPU = 0;
+
 
     ArrayList<AForce> forces = new ArrayList<>();
 
     public Draw() {
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("ssSSS");
+        lastTimeCPU = Integer.parseInt(dtf.format(LocalDateTime.now()));
+        lastTimeGPU = lastTimeCPU;
+
         InputStream is = getClass().getResourceAsStream("/Fonts/AtariFont.ttf");
         try {
             assert is != null;
@@ -30,6 +40,10 @@ public class Draw extends JPanel {
         }
 
         Main.gameTimer = new Timer(5, (e) -> {// Timer with 5ms delay
+            int actualTime = Integer.parseInt(dtf.format(LocalDateTime.now()));
+            actualFpsCPU = 1000 / (actualTime - lastTimeCPU);
+            lastTimeCPU = actualTime;
+
             if (Main.ship.isRotatesRight()) {// Rotate ship right if key is pressed
                 double r = Main.ship.getRotation() + 1.0;
                 Main.ship.setRotation(r % 360);
@@ -125,10 +139,13 @@ public class Draw extends JPanel {
         });
         Main.fpsTimer = new Timer(Main.fps, null);
         Main.fpsTimer.addActionListener((f) -> {
-            repaint();
+            int actualTime = Integer.parseInt(dtf.format(LocalDateTime.now()));
+            actualFpsGPU = 1000 / (actualTime - lastTimeGPU);
+            lastTimeGPU = actualTime;
 
-            Toolkit.getDefaultToolkit().sync();
+            repaint();
             if (Objects.equals(System.getProperty("os.name"), "Linux")) {// Fixing lags on Linux systems
+                Toolkit.getDefaultToolkit().sync();
             }
         });
     }
@@ -143,8 +160,25 @@ public class Draw extends JPanel {
         g2d.translate(20 * 5, 50);
         g2d.setFont(Main.atariFont.deriveFont(Font.PLAIN, 13));
 //        g2d.setFont(g2d.getFont().deriveFont(Font.PLAIN, 13));
-        g2d.drawString("Points: " + Main.points, 0, 0);
-        g2d.drawString(" Level: " + Main.level, 0, 15);
+        g2d.drawString(" Points: " + Main.points, 0, 0);
+        g2d.drawString("  Level: " + Main.level, 0, 15);
+        g2d.setColor(Color.green);
+        if (actualFpsCPU < 40) {
+            g2d.setColor(Color.yellow);
+        }
+        if (actualFpsCPU < 20) {
+            g2d.setColor(Color.red);
+        }
+        g2d.drawString("CPU FPS: " + actualFpsCPU, 0, 30);
+        g2d.setColor(Color.green);
+        if (actualFpsGPU < 40) {
+            g2d.setColor(Color.yellow);
+        }
+        if (actualFpsGPU < 20) {
+            g2d.setColor(Color.red);
+        }
+        g2d.drawString("GPU FPS: " + actualFpsGPU, 0, 45);
+        g2d.setColor(Color.white);
         g2d.translate(-20 * 5, -50);
 
         // Draw Start Dialog

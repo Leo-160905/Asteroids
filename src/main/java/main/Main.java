@@ -25,6 +25,7 @@ public class Main {
     public static Timer fpsTimer;
     public static int fps = 1000/15;
 
+
     public static int coolDown = 10;// 10 ticks for cool down after starting a new level or crashing
 
     public static void main(String[] args) {
