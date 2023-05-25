@@ -24,6 +24,8 @@ public class Main {
 
     public static Timer fpsTimer;
     public static int fps = 1000/15;
+    public static boolean showFps = false;
+    public static int test = 0;
 
 
     public static int coolDown = 10;// 10 ticks for cool down after starting a new level or crashing
@@ -34,6 +36,9 @@ public class Main {
     }
 
     public static void startALevel(){// method to start a new level with a certain amount of asteroids
+        Scanner scan = new Scanner(System.in);
+        System.out.print("enter fps: ");
+        test = scan.nextInt();
         coolDown = 10;
         Random r = new Random();
             for(int i = 0; i < level + 2; i++){

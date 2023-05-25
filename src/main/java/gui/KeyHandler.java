@@ -82,6 +82,8 @@ public class KeyHandler extends KeyAdapter {
             Main.fpsTimer.setDelay(Main.fps);
             System.out.println("changed delay to: " + 1000 / Main.fps);
         }
-
+        if(e.getKeyCode() == KeyEvent.VK_F){
+            Main.showFps = !Main.showFps;
+        }
     }
 }

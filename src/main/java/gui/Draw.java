@@ -39,7 +39,7 @@ public class Draw extends JPanel {
             throw new RuntimeException(e);
         }
 
-        Main.gameTimer = new Timer(5, (e) -> {// Timer with 5ms delay
+        Main.gameTimer = new Timer(Main.test, (e) -> {// Timer with 5ms delay
             int actualTime = Integer.parseInt(dtf.format(LocalDateTime.now()));
             actualFpsCPU = 1000 / (actualTime - lastTimeCPU);
             lastTimeCPU = actualTime;
@@ -162,23 +162,25 @@ public class Draw extends JPanel {
 //        g2d.setFont(g2d.getFont().deriveFont(Font.PLAIN, 13));
         g2d.drawString(" Points: " + Main.points, 0, 0);
         g2d.drawString("  Level: " + Main.level, 0, 15);
-        g2d.setColor(Color.green);
-        if (actualFpsCPU < 40) {
-            g2d.setColor(Color.yellow);
+        if(Main.showFps) {
+            g2d.setColor(Color.green);
+            if (actualFpsCPU < 65) {
+                g2d.setColor(Color.yellow);
+            }
+            if (actualFpsCPU < 35) {
+                g2d.setColor(Color.red);
+            }
+            g2d.drawString("CPU FPS: " + actualFpsCPU, 0, 30);
+            g2d.setColor(Color.green);
+            if (actualFpsGPU < 65) {
+                g2d.setColor(Color.yellow);
+            }
+            if (actualFpsGPU < 35) {
+                g2d.setColor(Color.red);
+            }
+            g2d.drawString("GPU FPS: " + actualFpsGPU, 0, 45);
+            g2d.setColor(Color.white);
         }
-        if (actualFpsCPU < 20) {
-            g2d.setColor(Color.red);
-        }
-        g2d.drawString("CPU FPS: " + actualFpsCPU, 0, 30);
-        g2d.setColor(Color.green);
-        if (actualFpsGPU < 40) {
-            g2d.setColor(Color.yellow);
-        }
-        if (actualFpsGPU < 20) {
-            g2d.setColor(Color.red);
-        }
-        g2d.drawString("GPU FPS: " + actualFpsGPU, 0, 45);
-        g2d.setColor(Color.white);
         g2d.translate(-20 * 5, -50);
 
         // Draw Start Dialog
