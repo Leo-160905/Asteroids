@@ -49,7 +49,7 @@ public class Collider {
 
     public TwoCondition shipAsteroid() {
         int removable = -1;
-        boolean hitted = false;
+        boolean hit = false;
         boolean isBigAsteroid = false;
         if (Main.asteroids.size() > 0) {
             for (int i = Main.asteroids.size() - 1; i >= 0; i--) {
@@ -73,13 +73,13 @@ public class Collider {
                         Main.points += 70;
                     }
                     removable = i;
-                    hitted = true;
+                    hit = true;
                 }
                 if(removable != -1){
                     Main.asteroids.remove(removable);
                     removable = -1;
                 }
-                if (hitted) {
+                if (hit) {
                     return new TwoCondition(true, isBigAsteroid);
                 }
             }
