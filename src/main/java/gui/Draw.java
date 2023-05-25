@@ -119,16 +119,14 @@ public class Draw extends JPanel {
             if (Main.coolDown > 0 && counter % 25 == 0) {
                 Main.coolDown--;
             }
-
-            repaint();
             if (Objects.equals(System.getProperty("os.name"), "Linux")) {// Fixing lags on Linux systems
                 Toolkit.getDefaultToolkit().sync();
             }
-
             counter++;
             counter = counter % 1000;
         });
-
+        Main.fpsTimer = new Timer(Main.fps, null);
+        Main.fpsTimer.addActionListener((f) -> repaint());
     }
 
     @Override

@@ -16,11 +16,14 @@ public class Main {
 
     public static Asteroid recentlyDestroyed;// the asteroid that was most recently destroyed to hand over more information than in a boolean return statement
     public static Bullet lastBullet;
-    public static int lives = 0;
+    public static int lives = 5;
     public static int points = 0;
     public static int level = 0;
     public static Timer gameTimer;
     public static Font atariFont;
+
+    public static Timer fpsTimer;
+    public static int fps = 1000/15;
 
     public static int coolDown = 10;// 10 ticks for cool down after starting a new level or crashing
 
