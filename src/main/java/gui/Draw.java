@@ -22,6 +22,8 @@ public class Draw extends JPanel {
     int lastTimeCPU, actualFpsCPU = 0;
     int lastTimeGPU, actualFpsGPU = 0;
 
+    long frameBefore, frameAfter;
+
 
     ArrayList<AForce> forces = new ArrayList<>();
 
@@ -38,116 +40,131 @@ public class Draw extends JPanel {
         } catch (FontFormatException | IOException e) {
             throw new RuntimeException(e);
         }
+        frameBefore = System.currentTimeMillis();
+        Main.gameTimer = new Timer(5, (e) -> {// Timer with 5ms delay
+            frameAfter = System.currentTimeMillis();
+            long execCount = (frameAfter - frameBefore) / 5;
+            frameBefore = frameAfter;
+            do{
+                int actualTime = Integer.parseInt(dtf.format(LocalDateTime.now()));
+                if(actualTime - lastTimeCPU > 0){
+                    actualFpsCPU = 1000 / (actualTime - lastTimeCPU);
+                }
+                else {
+                    actualFpsCPU = 1000;
+                }
 
-        Main.gameTimer = new Timer(Main.test, (e) -> {// Timer with 5ms delay
-            int actualTime = Integer.parseInt(dtf.format(LocalDateTime.now()));
-            actualFpsCPU = 1000 / (actualTime - lastTimeCPU);
-            lastTimeCPU = actualTime;
+                lastTimeCPU = actualTime;
 
-            if (Main.ship.isRotatesRight()) {// Rotate ship right if key is pressed
-                double r = Main.ship.getRotation() + 1.0;
-                Main.ship.setRotation(r % 360);
-            }
-            if (Main.ship.isRotatesLeft()) {// Rotate ship left if key is pressed
-                double r = Main.ship.getRotation() - 1.0;
-                Main.ship.setRotation(r % 360);
-            }
-            if (counter % 10 == 0) {// Add force to forces arraylist if ship is thrusting
-                if (Main.ship.isThrust()) {
+                if (Main.ship.isRotatesRight()) {// Rotate ship right if key is pressed
+                    double r = Main.ship.getRotation() + 1.0;
+                    Main.ship.setRotation(r % 360);
+                }
+                if (Main.ship.isRotatesLeft()) {// Rotate ship left if key is pressed
+                    double r = Main.ship.getRotation() - 1.0;
+                    Main.ship.setRotation(r % 360);
+                }
+                if (counter % 10 == 0) {// Add force to forces arraylist if ship is thrusting
+                    if (Main.ship.isThrust()) {
+                        boolean newObject = true;
+                        for (AForce f : forces) {// Check if force with same rotation already exists
+                            if (f.getRotation() == Main.ship.getRotation()) {
+                                f.setLength(f.getLength() + 1);
+                                newObject = false;
+                            }
+                        }
+                        if (newObject) {// If not, create new force
+                            forces.add(new AForce(Main.ship.getRotation(), 2));
+                        }
+                        resist = 10.0;// Reset resistance
+                    }
+                    if (!Main.ship.isThrust() && counter % 50 == 0) {// If ship is not thrusting, reduce length of forces
+                        for (AForce f : forces) {// Reduce length of forces by resist to simulate friction and all forces expire at the same time
+                            f.setLength(f.getLength() - (f.getLength() / resist));
+                        }
+                        resist--;// Make resist smaller for stronger resistance
+                    }
+                }
+                if (((Main.ship.isShooter() && counter % 100 == 0 || Main.ship.isShoot()) && Main.bullets.size() < 15) && Main.coolDown <= 0) {// Shoot bullet if key is pressed and there are less than 15 bullets
+                    // Makes pattern, that you can shout more bullets after each other but if you hold it will just shoot one every 100 ticks
+                    Main.ship.setShoot(false);
+                    Main.bullets.add(new Bullet(25.0, Main.ship.getRotation(), Main.ship.getPosition()));
+                    Main.points--;
                     boolean newObject = true;
                     for (AForce f : forces) {// Check if force with same rotation already exists
-                        if (f.getRotation() == Main.ship.getRotation()) {
-                            f.setLength(f.getLength() + 1);
+                        if (f.getRotation() == 180 + Main.ship.getRotation()) {// If yes, increase length of force when shooting as recoil
+                            f.setLength(f.getLength() + 0.2);
                             newObject = false;
                         }
                     }
-                    if (newObject) {// If not, create new force
-                        forces.add(new AForce(Main.ship.getRotation(), 2));
+                    if (newObject) {// If not, create new force with recoil
+                        forces.add(new AForce(Main.ship.getRotation() + 180, 0.2));
                     }
-                    resist = 10.0;// Reset resistance
+                    resist = 10.0;
                 }
-                if (!Main.ship.isThrust() && counter % 50 == 0) {// If ship is not thrusting, reduce length of forces
-                    for (AForce f : forces) {// Reduce length of forces by resist to simulate friction and all forces expire at the same time
-                        f.setLength(f.getLength() - (f.getLength() / resist));
-                    }
-                    resist--;// Make resist smaller for stronger resistance
-                }
-            }
-            if (((Main.ship.isShooter() && counter % 100 == 0 || Main.ship.isShoot()) && Main.bullets.size() < 15) && Main.coolDown <= 0) {// Shoot bullet if key is pressed and there are less than 15 bullets
-                // Makes pattern, that you can shout more bullets after each other but if you hold it will just shoot one every 100 ticks
-                Main.ship.setShoot(false);
-                Main.bullets.add(new Bullet(25.0, Main.ship.getRotation(), Main.ship.getPosition()));
-                Main.points--;
-                boolean newObject = true;
-                for (AForce f : forces) {// Check if force with same rotation already exists
-                    if (f.getRotation() == 180 + Main.ship.getRotation()) {// If yes, increase length of force when shooting as recoil
-                        f.setLength(f.getLength() + 0.2);
-                        newObject = false;
-                    }
-                }
-                if (newObject) {// If not, create new force with recoil
-                    forces.add(new AForce(Main.ship.getRotation() + 180, 0.2));
-                }
-                resist = 10.0;
-            }
-            moveShip();
-            moveBullets();
-            moveAsteroids();
+                moveShip();
+                moveBullets();
+                moveAsteroids();
 
-            if ((counter % 4 == 0) && Main.coolDown <= 0) {// Move forces every 4th tick
-                Collider collider = new Collider();
-                TwoCondition shipCollides = collider.shipAsteroid();
-                if (shipCollides.condition1) {// Check if ship collides with an asteroid and if yes, reset ship position and remove one life
-                    Main.lives -= 1;
-                    Main.points -= 300;
-                    Main.coolDown = 10;
-                    Main.ship.setPosition(new APoint((double) AFrame.frameDimension.width / 2, (double) AFrame.frameDimension.height / 2));
-                    forces.clear();
-                    if (Main.lives <= 0) {
-                        AFrame.changeScene();
+                if ((counter % 4 == 0) && Main.coolDown <= 0) {// Move forces every 4th tick
+                    Collider collider = new Collider();
+                    TwoCondition shipCollides = collider.shipAsteroid();
+                    if (shipCollides.condition1) {// Check if ship collides with an asteroid and if yes, reset ship position and remove one life
+                        Main.lives -= 1;
+                        Main.points -= 300;
+                        Main.coolDown = 10;
+                        Main.ship.setPosition(new APoint((double) AFrame.frameDimension.width / 2, (double) AFrame.frameDimension.height / 2));
+                        forces.clear();
+                        if (Main.lives <= 0) {
+                            AFrame.changeScene();
+                        }
                     }
-                }
-                if (shipCollides.condition2) {
-                    breakAsteroid();
-                }
-                if (collider.bulletAsteroids()) {
-                    breakAsteroid();
-                } else {
-                    if (Main.asteroids.size() == 0) {// If all asteroids are destroyed, start new level
-                        Main.level += 1;
-                        Main.startALevel();
-                        if (Main.level % 3 == 0 && Main.lives < 5) {
-                            Main.lives += 1;
+                    if (shipCollides.condition2) {
+                        breakAsteroid();
+                    }
+                    if (collider.bulletAsteroids()) {
+                        breakAsteroid();
+                    } else {
+                        if (Main.asteroids.size() == 0) {// If all asteroids are destroyed, start new level
+                            Main.level += 1;
+                            Main.startALevel();
+                            if (Main.level % 3 == 0 && Main.lives < 5) {
+                                Main.lives += 1;
+                            }
                         }
                     }
                 }
-            }
-            if (Main.coolDown % 2 == 0 && Main.coolDown > 0) {
-                shipColor = Color.white;
-            } else if (Main.coolDown % 2 == 1) {
-                shipColor = Color.decode("#39EEFF");
-            } else if (shipColor != Color.white) {
-                shipColor = Color.white;
-            }
+                if (Main.coolDown % 2 == 0 && Main.coolDown > 0) {
+                    shipColor = Color.white;
+                } else if (Main.coolDown % 2 == 1) {
+                    shipColor = Color.decode("#39EEFF");
+                } else if (shipColor != Color.white) {
+                    shipColor = Color.white;
+                }
 
-            if (Main.coolDown > 0 && counter % 25 == 0) {
-                Main.coolDown--;
-            }
+                if (Main.coolDown > 0 && counter % 25 == 0) {
+                    Main.coolDown--;
+                }
 
-            counter++;
-            counter = counter % 1000;
-        });
-        Main.fpsTimer = new Timer(Main.fps, null);
-        Main.fpsTimer.addActionListener((f) -> {
-            int actualTime = Integer.parseInt(dtf.format(LocalDateTime.now()));
-            actualFpsGPU = 1000 / (actualTime - lastTimeGPU);
-            lastTimeGPU = actualTime;
+                counter++;
+                counter = counter % 1000;
 
-            repaint();
-            if (Objects.equals(System.getProperty("os.name"), "Linux")) {// Fixing lags on Linux systems
-                Toolkit.getDefaultToolkit().sync();
-            }
-        });
+                execCount--;
+                }while(execCount > 0);
+            });
+
+            Main.fpsTimer = new Timer(Main.fps, null);
+            Main.fpsTimer.addActionListener((f) -> {
+                int actualTime = Integer.parseInt(dtf.format(LocalDateTime.now()));
+                actualFpsGPU = 1000 / (actualTime - lastTimeGPU);
+                lastTimeGPU = actualTime;
+
+                repaint();
+                if (Objects.equals(System.getProperty("os.name"), "Linux")) {// Fixing lags on Linux systems
+                    Toolkit.getDefaultToolkit().sync();
+                }
+            });
+
     }
 
     @Override

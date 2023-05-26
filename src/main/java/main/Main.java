@@ -3,7 +3,6 @@ import gui.AFrame;
 import objects.Asteroid;
 import objects.Bullet;
 import objects.Ship;
-
 import javax.swing.Timer;
 import java.awt.*;
 import java.util.*;
@@ -23,22 +22,28 @@ public class Main {
     public static Font atariFont;
 
     public static Timer fpsTimer;
-    public static int fps = 1000/15;
+    public static int fps = 1000/60;
     public static boolean showFps = false;
-    public static int test = 0;
+    public static boolean startWithoutBug;
 
 
     public static int coolDown = 10;// 10 ticks for cool down after starting a new level or crashing
 
     public static void main(String[] args) {
+        System.out.print("How would you like to start? ");
+        Scanner scan = new Scanner(System.in);
+        startWithoutBug = scan.nextInt() != 0;
+        System.out.println(startWithoutBug);
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         startALevel();
         new AFrame();
     }
 
     public static void startALevel(){// method to start a new level with a certain amount of asteroids
-        Scanner scan = new Scanner(System.in);
-        System.out.print("enter fps: ");
-        test = scan.nextInt();
         coolDown = 10;
         Random r = new Random();
             for(int i = 0; i < level + 2; i++){

@@ -29,6 +29,7 @@ public class AFrame extends JFrame {
         cp = getContentPane();
         cp.add(mainScreen);
         pack();
+
         setVisible(true);
     }
 
