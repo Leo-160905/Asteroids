@@ -3,6 +3,7 @@ import main.APoint;
 import main.Main;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Objects;
 import java.util.Random;
 
 public class KeyHandler extends KeyAdapter {
@@ -83,7 +84,9 @@ public class KeyHandler extends KeyAdapter {
             System.out.println("changed delay to: " + 1000 / Main.fps);
         }
         if(e.getKeyCode() == KeyEvent.VK_F){
-            Main.showFps = !Main.showFps;
+            if(Objects.equals(System.getProperty("os.name"), "Linux")){
+                Main.showFps = !Main.showFps;
+            }
         }
     }
 }

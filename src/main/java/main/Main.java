@@ -24,16 +24,11 @@ public class Main {
     public static Timer fpsTimer;
     public static int fps = 1000/60;
     public static boolean showFps = false;
-    public static boolean startWithoutBug;
 
 
     public static int coolDown = 10;// 10 ticks for cool down after starting a new level or crashing
 
     public static void main(String[] args) {
-        System.out.print("How would you like to start? ");
-        Scanner scan = new Scanner(System.in);
-        startWithoutBug = scan.nextInt() != 0;
-        System.out.println(startWithoutBug);
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
