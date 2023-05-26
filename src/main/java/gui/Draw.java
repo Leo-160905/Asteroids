@@ -43,8 +43,14 @@ public class Draw extends JPanel {
         frameBefore = System.currentTimeMillis();
         Main.gameTimer = new Timer(5, (e) -> {// Timer with 5ms delay
             frameAfter = System.currentTimeMillis();
-            long execCount = (frameAfter - frameBefore) / 5;
-            frameBefore = frameAfter;
+            long execCount;
+            if(System.getProperty("os.name").toLowerCase().contains("windows")){
+                execCount = (frameAfter - frameBefore) / 5;
+                frameBefore = frameAfter;
+            }
+            else {
+                execCount = 0;
+            }
             do{
                 int actualTime = Integer.parseInt(dtf.format(LocalDateTime.now()));
                 if(actualTime - lastTimeCPU > 0){

@@ -21,6 +21,7 @@ public class AFrame extends JFrame {
         setTitle("Asteroids");
         addKeyListener(new KeyHandler());
 
+
         Draw mainScreen = new Draw();
         mainScreen.setLocation(0, 0);
         mainScreen.setPreferredSize(frameDimension);
