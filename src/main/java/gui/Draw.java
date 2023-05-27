@@ -374,7 +374,7 @@ public class Draw extends JPanel {
 
         Random r = new Random();
         for (int i = 0; i < r.nextInt(3) + 1; i++) {
-            Main.asteroids.add(new Asteroid(Main.recentlyDestroyed.getPosition(), r.nextInt(10) + r1 - 5, r.nextInt(10) + 5, 0));
+            Main.asteroids.add(new Asteroid(Main.recentlyDestroyed.getPosition(), r.nextInt(30) + r1 - 15, r.nextInt(10) + 5, r.nextInt(4), r.nextInt(3) + 1));
 
         }
     }

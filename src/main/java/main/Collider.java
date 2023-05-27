@@ -24,7 +24,7 @@ public class Collider {
                     if (x1 < bx && x2 > bx && y1 < by && y2 > by) {// Bullet collides with Asteroid
                         Main.asteroids.get(i).setHitCount();
                         if (Main.asteroids.get(i).getHitCount() <= 0) {// Asteroid is dead
-                            if (Main.asteroids.get(i).getModel() > 0) {// is it a big or a small one
+                            if (Main.asteroids.get(i).getModel() > 6) {// is it a big or a small one
                                 Main.recentlyDestroyed = Main.asteroids.get(i);
                                 Main.lastBullet = Main.bullets.get(j);
                                 returnable = true;
@@ -63,7 +63,7 @@ public class Collider {
                 double shipY = Main.ship.getPosition().y;
                 if (x1 - 3 < shipX && x2 + 3 > shipX && y1 - 3 < shipY && y2 + 3 > shipY) {
                     a.setHitCount();
-                    if (a.getModel() > 0) {// is it a big or a small one
+                    if (a.getModel() > 6) {// is it a big or a small one
                         Main.recentlyDestroyed = Main.asteroids.get(i);
                         Main.lastBullet = new Bullet(Main.ship.getSpeed(), Main.ship.getRotation(), new APoint(0,0));
                         isBigAsteroid = true;

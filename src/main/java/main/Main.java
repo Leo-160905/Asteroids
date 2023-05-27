@@ -1,8 +1,10 @@
 package main;
+
 import gui.AFrame;
 import objects.Asteroid;
 import objects.Bullet;
 import objects.Ship;
+
 import javax.swing.Timer;
 import java.awt.*;
 import java.util.*;
@@ -22,7 +24,7 @@ public class Main {
     public static Font atariFont;
 
     public static Timer fpsTimer;
-    public static int fps = 1000/60;
+    public static int fps = 1000 / 60;
     public static boolean showFps = false;
 
 
@@ -38,19 +40,30 @@ public class Main {
         new AFrame();
     }
 
-    public static void startALevel(){// method to start a new level with a certain amount of asteroids
+    public static void startALevel() {// method to start a new level with a certain amount of asteroids
         coolDown = 10;
         Random r = new Random();
-            for(int i = 0; i < level + 2; i++){
-                double x;
-                double y;
-                int sX = Math.toIntExact(Math.round(ship.getPosition().x));
-                int sY = Math.toIntExact(Math.round(ship.getPosition().y));
-                do{
-                    x = r.nextInt(sX);
-                    y = r.nextInt(sY);
-                }while(x < sX / 2.0 - 100 && x > sX / 2.0 + 100 && y < sY / 2.0 - 100 && y > sY / 2.0 + 100);
-            Main.asteroids.add(new Asteroid(new APoint(x,y),r.nextInt(360),r.nextInt(15) + 5,1));
+        for (int i = 0; i < level + 2; i++) {
+            double x;
+            double y;
+            int sX = Math.toIntExact(Math.round(ship.getPosition().x));
+            int sY = Math.toIntExact(Math.round(ship.getPosition().y));
+            do {
+                x = r.nextInt(sX);
+                y = r.nextInt(sY);
+            } while (x < sX / 2.0 - 100 && x > sX / 2.0 + 100 && y < sY / 2.0 - 100 && y > sY / 2.0 + 100);
+            Main.asteroids.add(new Asteroid(new APoint(x, y), r.nextInt(360), r.nextInt(15) + 5, r.nextInt(3) + 7, r.nextInt(5) + 2));
+            // 0 = small
+            // 1 = small
+            // 2 = small
+            // 3 = small
+            // 4 = small
+            // 5 = small
+            // 6 = small
+            // 7 = small
+
+            // 8 = big
+
         }
     }
 }
