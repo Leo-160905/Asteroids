@@ -3,7 +3,7 @@ package objects;
 import main.APoint;
 
 public class BoxedCollider {
-    APoint point1, point2;// to points to make a square (Boxedcollider) around the object
+    APoint point1, point2;// to points to make a square (Boxed collider) around the object
 
     public BoxedCollider(int x1, int y1, int x2, int y2) {
         this.point1 = new APoint(x1, y1);

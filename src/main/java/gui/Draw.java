@@ -44,19 +44,17 @@ public class Draw extends JPanel {
         Main.gameTimer = new Timer(5, (e) -> {// Timer with 5ms delay
             frameAfter = System.currentTimeMillis();
             long execCount;
-            if(System.getProperty("os.name").toLowerCase().contains("windows")){
+            if (System.getProperty("os.name").toLowerCase().contains("windows")) {
                 execCount = (frameAfter - frameBefore) / 5;
                 frameBefore = frameAfter;
-            }
-            else {
+            } else {
                 execCount = 0;
             }
-            do{
+            do {
                 int actualTime = Integer.parseInt(dtf.format(LocalDateTime.now()));
-                if(actualTime - lastTimeCPU > 0){
+                if (actualTime - lastTimeCPU > 0) {
                     actualFpsCPU = 1000 / (actualTime - lastTimeCPU);
-                }
-                else {
+                } else {
                     actualFpsCPU = 1000;
                 }
 
@@ -156,20 +154,20 @@ public class Draw extends JPanel {
                 counter = counter % 1000;
 
                 execCount--;
-                }while(execCount > 0);
-            });
+            } while (execCount > 0);
+        });
 
-            Main.fpsTimer = new Timer(Main.fps, null);
-            Main.fpsTimer.addActionListener((f) -> {
-                int actualTime = Integer.parseInt(dtf.format(LocalDateTime.now()));
-                actualFpsGPU = 1000 / (actualTime - lastTimeGPU);
-                lastTimeGPU = actualTime;
+        Main.fpsTimer = new Timer(Main.fps, null);
+        Main.fpsTimer.addActionListener((f) -> {
+            int actualTime = Integer.parseInt(dtf.format(LocalDateTime.now()));
+            actualFpsGPU = 1000 / (actualTime - lastTimeGPU);
+            lastTimeGPU = actualTime;
 
-                repaint();
-                if (Objects.equals(System.getProperty("os.name"), "Linux")) {// Fixing lags on Linux systems
-                    Toolkit.getDefaultToolkit().sync();
-                }
-            });
+            repaint();
+            if (Objects.equals(System.getProperty("os.name"), "Linux")) {// Fixing lags on Linux systems
+                Toolkit.getDefaultToolkit().sync();
+            }
+        });
 
     }
 
@@ -185,7 +183,7 @@ public class Draw extends JPanel {
 //        g2d.setFont(g2d.getFont().deriveFont(Font.PLAIN, 13));
         g2d.drawString(" Points: " + Main.points, 0, 0);
         g2d.drawString("  Level: " + Main.level, 0, 15);
-        if(Main.showFps) {
+        if (Main.showFps) {
             g2d.setColor(Color.green);
             if (actualFpsCPU < 65) {
                 g2d.setColor(Color.yellow);
@@ -207,11 +205,11 @@ public class Draw extends JPanel {
         g2d.translate(-20 * 5, -50);
 
         // Draw Start Dialog
-        if(!Main.gameTimer.isRunning()) {
+        if (!Main.gameTimer.isRunning()) {
             g2d.setColor(Color.white);
             g2d.translate(AFrame.frameDimension.width / 2 - 269, AFrame.frameDimension.height / 2 + 100);
             g2d.setFont(g2d.getFont().deriveFont(Font.PLAIN, 35));
-            g2d.drawString("Press Enter To Start",0,0);
+            g2d.drawString("Press Enter To Start", 0, 0);
             g2d.setFont(g2d.getFont().deriveFont(Font.PLAIN, 15));
             g2d.translate(-AFrame.frameDimension.width / 2 + 269, -AFrame.frameDimension.height / 2 - 100);
         }
@@ -353,17 +351,17 @@ public class Draw extends JPanel {
                 a.setPosition(new APoint(a.getPosition().x - x, a.getPosition().y + y));
 
                 // Screen wrap
-                if (a.getPosition().x <= 0) {// Left Edge
-                    a.setX(AFrame.frameDimension.width - 2);
+                if (a.getPosition().x <= -10) {// Left Edge
+                    a.setX(AFrame.frameDimension.width - 8);
                 }
-                if (a.getPosition().x >= AFrame.frameDimension.width) {// Right edge
-                    a.setX(2);
+                if (a.getPosition().x >= AFrame.frameDimension.width + 10) {// Right edge
+                    a.setX(-8);
                 }
-                if (a.getPosition().y <= 0) {// Top edge
-                    a.setY(AFrame.frameDimension.height - 2);
+                if (a.getPosition().y <= -10) {// Top edge
+                    a.setY(AFrame.frameDimension.height - 8);
                 }
-                if (a.getPosition().y >= AFrame.frameDimension.height) {// Bottom edge
-                    a.setY(2);
+                if (a.getPosition().y >= AFrame.frameDimension.height + 10) {// Bottom edge
+                    a.setY(-8);
                 }
             }
         }
