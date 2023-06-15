@@ -89,9 +89,7 @@ public class KeyHandler extends KeyAdapter {
             System.out.println("changed delay to: " + 1000 / Main.fps);
         }
         if(e.getKeyCode() == KeyEvent.VK_F){
-            if(Objects.equals(System.getProperty("os.name"), "Linux")){
-                Main.showFps = !Main.showFps;
-            }
+            Main.showFps = !Main.showFps;
         }
     }
 }
