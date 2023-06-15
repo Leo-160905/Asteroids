@@ -61,26 +61,31 @@ public class KeyHandler extends KeyAdapter {
         if(e.getKeyCode() == KeyEvent.VK_1){
             Main.fps = 1000/30;
             Main.fpsTimer.setDelay(Main.fps);
+            Main.gameTimer.setDelay(Main.fps);
             System.out.println("changed delay to: " + 1000 / Main.fps);
         }
         if(e.getKeyCode() == KeyEvent.VK_2){
             Main.fps = 1000/60;
             Main.fpsTimer.setDelay(Main.fps);
+            Main.gameTimer.setDelay(Main.fps);
             System.out.println("changed delay to: " + 1000 / Main.fps);
         }
         if(e.getKeyCode() == KeyEvent.VK_3){
             Main.fps = 1000/90;
             Main.fpsTimer.setDelay(Main.fps);
+            Main.gameTimer.setDelay(Main.fps);
             System.out.println("changed delay to: " + 1000 / Main.fps);
         }
         if(e.getKeyCode() == KeyEvent.VK_4){
             Main.fps = 1000/140;
             Main.fpsTimer.setDelay(Main.fps);
+            Main.gameTimer.setDelay(Main.fps);
             System.out.println("changed delay to: " + 1000 / Main.fps);
         }
         if(e.getKeyCode() == KeyEvent.VK_5){
             Main.fps = 1000/200;
             Main.fpsTimer.setDelay(Main.fps);
+            Main.gameTimer.setDelay(Main.fps);
             System.out.println("changed delay to: " + 1000 / Main.fps);
         }
         if(e.getKeyCode() == KeyEvent.VK_F){
