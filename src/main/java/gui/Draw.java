@@ -37,7 +37,7 @@ public class Draw extends JPanel {
 
 
         currentMillisOld = System.currentTimeMillis();
-        Main.gameTimer = new Timer(3000 / Main.timerTickRate, (e) -> {// Timer with 5ms delay
+        Main.gameTimer = new Timer(1000 / Main.timerTickRate, (e) -> {// Timer with 5ms delay
             currentMillis = System.currentTimeMillis();
             long millisPassed = currentMillis - currentMillisOld;
             actualFpsCPU = 1000 / (millisPassed);
@@ -80,7 +80,7 @@ public class Draw extends JPanel {
             if (((Main.ship.isShooter() && counter % condition == 0 || Main.ship.isShoot()) && Main.bullets.size() < 30) && Main.coolDown <= 0) {// Shoot bullet if key is pressed and there are less than 15 bullets
                 // Makes pattern, that you can shout more bullets after each other but if you hold it will just shoot one every 100 ticks
                 Main.ship.setShoot(false);
-                Main.bullets.add(new Bullet(30.0, Main.ship.getRotation(), Main.ship.getPosition()));
+                Main.bullets.add(new Bullet(25.0, Main.ship.getRotation(), Main.ship.getPosition()));
                 Main.points--;
                 boolean newObject = true;
                 for (AForce f : forces) {// Check if force with same rotation already exists
