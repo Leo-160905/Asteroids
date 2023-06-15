@@ -25,6 +25,7 @@ public class Main {
 
     public static Timer fpsTimer;
     public static int fps = 1000 / 60;
+    public static int timerTickRate = 200;
     public static boolean showFps = false;
 
 
@@ -60,10 +61,10 @@ public class Main {
             // 4 = small
             // 5 = small
             // 6 = small
-            // 7 = small
 
+            // 7 = big
             // 8 = big
-
+            // 9 = big
         }
     }
 }

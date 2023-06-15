@@ -35,23 +35,29 @@ public class AFrame extends JFrame {
     }
 
     public static void changeScene(){
+        // Removes the game Panel to show the end screen
         cp.remove(0);
         cp.revalidate();
         cp.repaint();
 
+        // stops the timer, because it isn't used anymore
         Main.gameTimer.stop();
+        Main.fpsTimer.stop();
 
+        // Generates end Panel
         JPanel p = new JPanel();
         p.setSize(frameDimension);
         p.setLocation(0,0);
         p.setBackground(Color.black);
         p.setLayout(null);
 
+        // Makes description for textField
         JLabel l = new JLabel("enter name");
         l.setBounds(160,frameDimension.height / 2 + 300,500,50);
         l.setFont(Main.atariFont.deriveFont(Font.BOLD, 25));
         l.setForeground(Color.white);
 
+        // Textfield for name and with enter Press you can submit your points to Database
         JTextField tf = new JTextField();
         tf.setBounds(frameDimension.width / 2 - 250,frameDimension.height / 2 + 300,500,50);
         tf.setBackground(null);
@@ -67,6 +73,9 @@ public class AFrame extends JFrame {
                     String playerName = tf.getText();
                     System.out.println(playerName + ": " + Main.points);
                     tf.setText("");
+
+                    // SQL Database for player Scores -> Global Highscore TODO
+
                 }
             }
         });
